@@ -81,6 +81,7 @@ DartsUi.prototype.drawPoints = function(radius, fontSize, color) {
     point.attr({
       fill: color,
       dy: fontSize / 2,
+      'font-family': 'Impact',
       'font-size': fontSize + 'px',
       'text-anchor': 'middle'
     });

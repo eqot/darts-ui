@@ -21,9 +21,9 @@ DartsUi.prototype.draw = function() {
     class: 'base'
   });
 
-  var doubleRings  = this.drawRings('double high-ring',    this.radius * 0.75, this.radius * 0.05);
+  var doubleRings  = this.drawRings('double high-ring',    this.radius * 0.75, this.radius * 0.04);
   var singleRingsO = this.drawRings('single single-outer', this.radius * 0.60, this.radius * 0.25);
-  var tripleRings  = this.drawRings('triple high-ring',    this.radius * 0.45, this.radius * 0.05);
+  var tripleRings  = this.drawRings('triple high-ring',    this.radius * 0.45, this.radius * 0.04);
   var singleRingsI = this.drawRings('single single-inner', this.radius * 0.25, this.radius * 0.35);
 
   var OuterBull    = this.drawBull('bull bull-outer', this.radius * 0.1);

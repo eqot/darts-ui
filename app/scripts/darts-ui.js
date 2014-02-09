@@ -19,7 +19,10 @@ DartsUi.prototype.draw = function() {
     strokeWidth: 1
   });
 
-  var doubleRings = this.drawRing(this.radius * 0.75, 20, '#f00', '#00f');
+  var doubleRings  = this.drawRing(this.radius * 0.75, this.radius * 0.05, '#f00', '#00f');
+  var singleRingsO = this.drawRing(this.radius * 0.60, this.radius * 0.25, '#000', '#fff');
+  var tripleRings  = this.drawRing(this.radius * 0.45, this.radius * 0.05, '#f00', '#00f');
+  var singleRingsI = this.drawRing(this.radius * 0.25, this.radius * 0.35, '#000', '#fff');
 };
 
 DartsUi.prototype.drawRing = function(radius, strokeWidth, color0, color1) {

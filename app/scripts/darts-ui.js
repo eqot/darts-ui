@@ -16,18 +16,15 @@ var DartsUi = function (element) {
 };
 
 DartsUi.prototype.draw = function() {
-  var base = this.s.circle(this.centerX, this.centerY, this.radius);
-  base.attr({
-    class: 'base'
-  });
+  var base         = this.drawCircle('base',               this.radius);
 
   var doubleRings  = this.drawRings('double high-ring',    this.radius * 0.75, this.radius * 0.04);
   var singleRingsO = this.drawRings('single single-outer', this.radius * 0.60, this.radius * 0.25);
   var tripleRings  = this.drawRings('triple high-ring',    this.radius * 0.45, this.radius * 0.04);
   var singleRingsI = this.drawRings('single single-inner', this.radius * 0.25, this.radius * 0.35);
 
-  var OuterBull    = this.drawBull('bull bull-outer', this.radius * 0.1);
-  var BullsEye     = this.drawBull('bull bull-inner', this.radius * 0.05);
+  var OuterBull    = this.drawCircle('bull bull-outer',    this.radius * 0.1);
+  var BullsEye     = this.drawCircle('bull bull-inner',    this.radius * 0.05);
 
   var points = this.drawPoints('point', this.radius * 0.9, this.radius * 0.1, '#fff');
 };
@@ -54,7 +51,7 @@ DartsUi.prototype.drawRings = function(className, radius, strokeWidth) {
   return rings;
 };
 
-DartsUi.prototype.drawBull = function(className, radius) {
+DartsUi.prototype.drawCircle = function(className, radius) {
   var bull = this.s.circle(this.centerX, this.centerY, radius);
   bull.attr({
     class: className

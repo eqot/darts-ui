@@ -70,3 +70,10 @@ body {
   text-anchor: middle;
   fill: $font-color;
 }
+
+.cell {
+  &.focus {
+    stroke: #ff0 !important;
+    fill: #ff0 !important;
+  }
+}

@@ -21,7 +21,7 @@ DartsUi.prototype.draw = function() {
   var border = this.s.circle(this.centerX, this.centerY, this.radius);
   border.attr({
     fill: '#000',
-    stroke: '#ccc',
+    stroke: this.borderColor,
     strokeWidth: 1
   });
 

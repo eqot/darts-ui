@@ -14,6 +14,7 @@ var DartsUi = function (element) {
   this.colorHigh1 = '#00f';
   this.colorLow0  = '#000';
   this.colorLow1  = '#fff';
+  this.borderColor = '#888';
 };
 
 DartsUi.prototype.draw = function() {
@@ -28,6 +29,8 @@ DartsUi.prototype.draw = function() {
   var singleRingsO = this.drawRing(this.radius * 0.60, this.radius * 0.25, this.colorLow0,  this.colorLow1);
   var tripleRings  = this.drawRing(this.radius * 0.45, this.radius * 0.05, this.colorHigh0, this.colorHigh1);
   var singleRingsI = this.drawRing(this.radius * 0.25, this.radius * 0.35, this.colorLow0,  this.colorLow1);
+  var bullO = this.drawBull(this.radius * 0.1,  this.colorHigh0);
+  var bullI = this.drawBull(this.radius * 0.05, this.colorLow0);
 };
 
 DartsUi.prototype.drawRing = function(radius, strokeWidth, color0, color1) {
@@ -49,4 +52,15 @@ DartsUi.prototype.drawRing = function(radius, strokeWidth, color0, color1) {
   }
 
   return rings;
+};
+
+DartsUi.prototype.drawBull = function(radius, color) {
+  var bull = this.s.circle(this.centerX, this.centerY, radius);
+  bull.attr({
+    fill: color,
+    stroke: this.borderColor,
+    strokeWidth: 1
+  });
+
+  return bull;
 };

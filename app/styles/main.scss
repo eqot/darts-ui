@@ -2,14 +2,14 @@
 $base-color: #000;
 $border-color: #888;
 
-$ring-color-high-0: #f00;
-$ring-color-high-1: #00f;
+$ring-color-high-0: #e00;
+$ring-color-high-1: #0b0;
 $ring-color-low-0: #000;
-$ring-color-low-1: #fff;
+$ring-color-low-1: #ffe;
 
 $font-family: Impact;
 $font-size: 40;
-$font-color: #fff;
+$font-color: #eee;
 
 
 body {
@@ -69,4 +69,11 @@ body {
   font-size: $font-size + px;
   text-anchor: middle;
   fill: $font-color;
+}
+
+.cell {
+  &.focus {
+    stroke: #ff0 !important;
+    fill: #ff0 !important;
+  }
 }

@@ -33,8 +33,9 @@ DartsUi.prototype.draw = function() {
   var singleRingsO = this.drawRings(this.radius * 0.60, this.radius * 0.25, this.colorLow0,  this.colorLow1);
   var tripleRings  = this.drawRings(this.radius * 0.45, this.radius * 0.05, this.colorHigh0, this.colorHigh1);
   var singleRingsI = this.drawRings(this.radius * 0.25, this.radius * 0.35, this.colorLow0,  this.colorLow1);
-  var bullO = this.drawBull(this.radius * 0.1,  this.colorHigh0);
-  var bullI = this.drawBull(this.radius * 0.05, this.colorLow0);
+
+  var OuterBull    = this.drawBull(this.radius * 0.1,  this.colorHigh0);
+  var BullsEye     = this.drawBull(this.radius * 0.05, this.colorLow0);
 
   var points = this.drawPoints(this.radius * 0.9, this.radius * 0.1, '#fff');
 };

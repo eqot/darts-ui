@@ -2,7 +2,7 @@
 
 'use strict';
 
-$(function () {
+function main () {
   var dartsUi = new DartsUi('#darts-ui');
 
   // dartsUi.focus(13, '1-o');
@@ -10,4 +10,4 @@ $(function () {
   // dartsUi.focus(13, '1-i');
   // dartsUi.focus(13, '2');
   // dartsUi.focus(13, '3');
-});
+}

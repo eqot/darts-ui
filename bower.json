@@ -1,5 +1,17 @@
 {
   "name": "darts-ui",
+  "version": "0.1.0",
+  "main": "app/scripts/darts-ui.js",
+  "ignore": [
+    ".bowerrc",
+    ".editorconfig",
+    ".gitattributes",
+    ".gitignore",
+    ".jshintrc",
+    "Gruntfile.js",
+    "package.json",
+    "test/**"
+  ],
   "private": true,
   "dependencies": {
     "Snap.svg": "~0.2.0",

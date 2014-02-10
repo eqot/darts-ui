@@ -14,8 +14,7 @@
   ],
   "private": true,
   "dependencies": {
-    "Snap.svg": "~0.2.0",
-    "sass-bootstrap": "~3.0.0"
+    "Snap.svg": "~0.2.0"
   },
   "devDependencies": {}
 }

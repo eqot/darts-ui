@@ -14,6 +14,8 @@ var DartsUi = function (element) {
     20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5
   ];
 
+  this.focusClass = 'focus';
+
   this.cells = {};
   this.draw();
 };
@@ -91,6 +93,20 @@ DartsUi.prototype.focus = function(column, row) {
   var cell = this.cells[column + '-' + row];
   var className = cell.attr('class');
   cell.attr({
-    class: className + ' focus'
+    class: className + ' ' + this.focusClass
   });
-}
+};
+
+DartsUi.prototype.blur = function(column, row) {
+  var cell = this.cells[column + '-' + row];
+  var classNames = cell.attr('class').split(' ');
+  var newClass = [];
+  for (var i = 0; i < classNames.length; i++) {
+    if (classNames[i] !== this.focusClass) {
+      newClass.push(classNames[i]);
+    }
+  }
+  cell.attr({
+    class: newClass.join(' ')
+  });
+};

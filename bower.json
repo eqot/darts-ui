@@ -1,11 +1,21 @@
 {
   "name": "darts-ui",
+  "version": "0.1.0",
+  "main": "app/scripts/darts-ui.js",
+  "ignore": [
+    ".bowerrc",
+    ".editorconfig",
+    ".gitattributes",
+    ".gitignore",
+    ".jshintrc",
+    "Gruntfile.js",
+    "package.json",
+    "test/**"
+  ],
   "private": true,
   "dependencies": {
-    "sass-bootstrap": "~3.0.0",
-    "modernizr": "~2.6.2",
-    "jquery": "~1.10.2",
-    "Snap.svg": "~0.2.0"
+    "Snap.svg": "~0.2.0",
+    "sass-bootstrap": "~3.0.0"
   },
   "devDependencies": {}
 }

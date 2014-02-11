@@ -10,6 +10,7 @@
     ".jshintrc",
     "Gruntfile.js",
     "package.json",
+    "app/scripts/main.js",
     "test/**"
   ],
   "private": true,

@@ -18,6 +18,8 @@ var DartsUi = function (element) {
 
   this.cells = {};
   this.draw();
+
+  this.dartsAddon = new DartsAddon();
 };
 
 DartsUi.prototype.draw = function() {
@@ -109,4 +111,13 @@ DartsUi.prototype.blur = function(column, row) {
   cell.attr({
     class: newClass.join(' ')
   });
+};
+
+var DartsAddon = function () {
+  this.dartsduinoAddon = document.dartsduino;
+  if (this.dartsduinoAddon) {
+    // console.log('dartsAddon has been enabled.');
+  } else {
+    // console.log('dartsAddon is not detected.');
+  }
 };

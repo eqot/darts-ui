@@ -24,26 +24,28 @@ var DartsUi = function (element) {
 };
 
 DartsUi.prototype.draw = function() {
-  this.dartsUi = this.s.g().attr({class: 'darts-ui'});
+  // this.dartsUi = this.s.g().attr({class: 'darts-ui'});
+  this.dartsUi = this.s.g();
 
-  var base         = this.drawCircle('darts-base',                     'base', this.radius);
+  var base = this.drawCircle('darts-base', 'base', this.radius);
   this.dartsUi.append(base);
 
-  var doubleRings  = this.drawRings('darts-double darts-high-ring',    '2',   this.radius * 0.75, this.radius * 0.04);
-  var singleRingsO = this.drawRings('darts-single darts-single-outer', '1-o', this.radius * 0.60, this.radius * 0.25);
-  var tripleRings  = this.drawRings('darts-triple darts-high-ring',    '3',   this.radius * 0.45, this.radius * 0.04);
-  var singleRingsI = this.drawRings('darts-single darts-single-inner', '1-i', this.radius * 0.25, this.radius * 0.35);
+  var doubleRings  = this.drawRings('darts-cell darts-high-ring', '2',   this.radius * 0.75, this.radius * 0.04);
+  var singleRingsO = this.drawRings('darts-cell darts-single',    '1-o', this.radius * 0.60, this.radius * 0.25);
+  var tripleRings  = this.drawRings('darts-cell darts-high-ring', '3',   this.radius * 0.45, this.radius * 0.04);
+  var singleRingsI = this.drawRings('darts-cell darts-single',    '1-i', this.radius * 0.25, this.radius * 0.35);
   this.dartsUi.append(doubleRings);
   this.dartsUi.append(singleRingsO);
   this.dartsUi.append(tripleRings);
   this.dartsUi.append(singleRingsI);
 
-  var OuterBull    = this.drawCircle('darts-bull darts-bull-outer',    'bull-o', this.radius * 0.1);
-  var BullsEye     = this.drawCircle('darts-bull darts-bull-inner',    'bull-i', this.radius * 0.05);
+  var OuterBull = this.drawCircle('darts-cell darts-bull darts-bull-outer', 'bull-o', this.radius * 0.1);
+  var BullsEye  = this.drawCircle('darts-cell darts-bull darts-bull-inner', 'bull-i', this.radius * 0.05);
   this.dartsUi.append(OuterBull);
   this.dartsUi.append(BullsEye);
 
   var points = this.drawPoints('darts-point', this.radius * 0.9, this.radius * 0.1, '#fff');
+  this.dartsUi.append(points);
 
   var that = this;
   this.dartsUi.click(function (event) {
@@ -57,7 +59,8 @@ DartsUi.prototype.draw = function() {
 };
 
 DartsUi.prototype.drawRings = function(className, key, radius, strokeWidth) {
-  var rings = this.s.g().attr({class: className});
+  // var rings = this.s.g().attr({class: className});
+  var rings = this.s.g();
 
   for (var i = 0; i < 20; i++) {
     var angle0 = (i * 18 - 9) * Math.PI / 180;
@@ -68,7 +71,8 @@ DartsUi.prototype.drawRings = function(className, key, radius, strokeWidth) {
     var y1 = this.centerY - radius * Math.cos(angle1);
     var ring = this.s.path('M' + x0 + ' ' + y0 + ' A' + radius + ' ' + radius + ' 0 0 1 ' + x1 + ' ' + y1);
     ring.attr({
-      class: 'darts-cell darts-ring',
+      // class: 'darts-cell darts-ring',
+      class: className,
       strokeWidth: strokeWidth,
       id: this.points[i] + '-' + key
     });
@@ -84,7 +88,7 @@ DartsUi.prototype.drawRings = function(className, key, radius, strokeWidth) {
 DartsUi.prototype.drawCircle = function(className, key, radius) {
   var bull = this.s.circle(this.centerX, this.centerY, radius);
   bull.attr({
-    class: className + ' darts-cell',
+    class: className,
     id: key
   });
 

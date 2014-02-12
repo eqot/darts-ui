@@ -6,8 +6,8 @@ var DartsUi = function (element) {
   this.element = element;
   this.s = new Snap(this.element);
 
-  this.centerX = 301;
-  this.centerY = 301;
+  this.centerX = 320;
+  this.centerY = 320;
   this.radius  = 300;
 
   this.points = [

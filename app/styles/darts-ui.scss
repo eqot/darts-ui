@@ -8,6 +8,7 @@ $darts-color-low-0: #000;
 $darts-color-low-1: #ffe;
 
 $darts-color-focus: #fd4;
+$darts-color-selected: #8ff;
 
 $darts-font-family: Impact;
 $darts-font-size: 40;
@@ -68,5 +69,10 @@ $darts-font-color: #eee;
   &.darts-focus {
     stroke: $darts-color-focus !important;
     fill: $darts-color-focus !important;
+  }
+
+  &.darts-selected {
+    stroke: $darts-color-selected !important;
+    fill: $darts-color-selected !important;
   }
 }

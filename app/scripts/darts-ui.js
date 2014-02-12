@@ -15,6 +15,7 @@ var DartsUi = function (element) {
   ];
 
   this.focusClass = 'darts-focus';
+  this.selectedClass = 'darts-selected';
 
   this.cells = {};
   this.draw();
@@ -23,17 +24,36 @@ var DartsUi = function (element) {
 };
 
 DartsUi.prototype.draw = function() {
-  var base         = this.drawCircle('darts-base',               this.radius);
+  this.dartsUi = this.s.g().attr({class: 'darts-ui'});
+
+  var base         = this.drawCircle('darts-base',                     'base', this.radius);
+  this.dartsUi.append(base);
 
   var doubleRings  = this.drawRings('darts-double darts-high-ring',    '2',   this.radius * 0.75, this.radius * 0.04);
   var singleRingsO = this.drawRings('darts-single darts-single-outer', '1-o', this.radius * 0.60, this.radius * 0.25);
   var tripleRings  = this.drawRings('darts-triple darts-high-ring',    '3',   this.radius * 0.45, this.radius * 0.04);
   var singleRingsI = this.drawRings('darts-single darts-single-inner', '1-i', this.radius * 0.25, this.radius * 0.35);
+  this.dartsUi.append(doubleRings);
+  this.dartsUi.append(singleRingsO);
+  this.dartsUi.append(tripleRings);
+  this.dartsUi.append(singleRingsI);
 
-  var OuterBull    = this.drawCircle('darts-bull darts-bull-outer',    this.radius * 0.1);
-  var BullsEye     = this.drawCircle('darts-bull darts-bull-inner',    this.radius * 0.05);
+  var OuterBull    = this.drawCircle('darts-bull darts-bull-outer',    'bull-o', this.radius * 0.1);
+  var BullsEye     = this.drawCircle('darts-bull darts-bull-inner',    'bull-i', this.radius * 0.05);
+  this.dartsUi.append(OuterBull);
+  this.dartsUi.append(BullsEye);
 
   var points = this.drawPoints('darts-point', this.radius * 0.9, this.radius * 0.1, '#fff');
+
+  var that = this;
+  this.dartsUi.click(function (event) {
+    var id = event.target.id;
+    if (that.checkClass(that.cells[id].attr(), that.selectedClass)) {
+      that.removeClass(that.cells[id].attr(), that.selectedClass);
+    } else {
+      that.addClass(that.cells[id].attr(), that.selectedClass);
+    }
+  });
 };
 
 DartsUi.prototype.drawRings = function(className, key, radius, strokeWidth) {
@@ -49,7 +69,8 @@ DartsUi.prototype.drawRings = function(className, key, radius, strokeWidth) {
     var ring = this.s.path('M' + x0 + ' ' + y0 + ' A' + radius + ' ' + radius + ' 0 0 1 ' + x1 + ' ' + y1);
     ring.attr({
       class: 'darts-cell darts-ring',
-      strokeWidth: strokeWidth
+      strokeWidth: strokeWidth,
+      id: this.points[i] + '-' + key
     });
 
     rings.append(ring);
@@ -60,11 +81,14 @@ DartsUi.prototype.drawRings = function(className, key, radius, strokeWidth) {
   return rings;
 };
 
-DartsUi.prototype.drawCircle = function(className, radius) {
+DartsUi.prototype.drawCircle = function(className, key, radius) {
   var bull = this.s.circle(this.centerX, this.centerY, radius);
   bull.attr({
-    class: className + ' darts-cell'
+    class: className + ' darts-cell',
+    id: key
   });
+
+  this.cells[key] = bull;
 
   return bull;
 };
@@ -93,24 +117,41 @@ DartsUi.prototype.drawPoints = function(className, radius) {
 
 DartsUi.prototype.focus = function(column, row) {
   var cell = this.cells[column + '-' + row];
+  this.addClass(cell, this.focusClass);
+};
+
+DartsUi.prototype.blur = function(column, row) {
+  var cell = this.cells[column + '-' + row];
+  this.removeClass(cell, this.focusClass);
+};
+
+DartsUi.prototype.addClass = function(cell, klass) {
   var classNames = cell.attr('class').split(' ');
-  if (classNames.indexOf(this.focusClass) === -1) {
-    classNames.push(this.focusClass);
+  if (classNames.indexOf(klass) === -1) {
+    classNames.push(klass);
     cell.attr({
       class: classNames.join(' ')
     });
   }
 };
 
-DartsUi.prototype.blur = function(column, row) {
-  var cell = this.cells[column + '-' + row];
+DartsUi.prototype.removeClass = function(cell, klass) {
   var classNames = cell.attr('class').split(' ');
-  var index = classNames.indexOf(this.focusClass);
+  var index = classNames.indexOf(klass);
   if (index !== -1) {
     classNames.splice(index, 1);
     cell.attr({
       class: classNames.join(' ')
     });
+  }
+};
+
+DartsUi.prototype.checkClass = function(cell, klass) {
+  var classNames = cell.attr('class').split(' ');
+  if (classNames.indexOf(klass) === -1) {
+    return false;
+  } else {
+    return true;
   }
 };
 

@@ -93,10 +93,13 @@ DartsUi.prototype.drawPoints = function(className, radius) {
 
 DartsUi.prototype.focus = function(column, row) {
   var cell = this.cells[column + '-' + row];
-  var className = cell.attr('class');
-  cell.attr({
-    class: className + ' ' + this.focusClass
-  });
+  var classNames = cell.attr('class').split(' ');
+  if (classNames.indexOf(this.focusClass) === -1) {
+    classNames.push(this.focusClass);
+    cell.attr({
+      class: classNames.join(' ')
+    });
+  }
 };
 
 DartsUi.prototype.blur = function(column, row) {

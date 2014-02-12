@@ -105,15 +105,13 @@ DartsUi.prototype.focus = function(column, row) {
 DartsUi.prototype.blur = function(column, row) {
   var cell = this.cells[column + '-' + row];
   var classNames = cell.attr('class').split(' ');
-  var newClass = [];
-  for (var i = 0; i < classNames.length; i++) {
-    if (classNames[i] !== this.focusClass) {
-      newClass.push(classNames[i]);
-    }
+  var index = classNames.indexOf(this.focusClass);
+  if (index !== -1) {
+    classNames.splice(index, 1);
+    cell.attr({
+      class: classNames.join(' ')
+    });
   }
-  cell.attr({
-    class: newClass.join(' ')
-  });
 };
 
 var DartsAddon = function () {

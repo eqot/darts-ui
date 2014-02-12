@@ -22,26 +22,22 @@ $darts-font-color: #eee;
 }
 
 .darts-high-ring {
-  .darts-ring {
-    &:nth-child(odd) {
-      stroke: $darts-color-high-0;
-    }
+  &:nth-child(odd) {
+    stroke: $darts-color-high-0;
+  }
 
-    &:nth-child(even) {
-      stroke: $darts-color-high-1;
-    }
+  &:nth-child(even) {
+    stroke: $darts-color-high-1;
   }
 }
 
 .darts-single {
-  .darts-ring {
-    &:nth-child(odd) {
-      stroke: $darts-color-low-0;
-    }
+  &:nth-child(odd) {
+    stroke: $darts-color-low-0;
+  }
 
-    &:nth-child(even) {
-      stroke: $darts-color-low-1;
-    }
+  &:nth-child(even) {
+    stroke: $darts-color-low-1;
   }
 }
 

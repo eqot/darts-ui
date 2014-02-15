@@ -14,13 +14,45 @@ var DartsUi = function (element) {
     20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5
   ];
 
+  this.rows = [
+    '2', '1-o', '3', '1-i'
+  ];
+
+  this.cellsMap = {
+    144 : '1-1-o', 148 : '1-1-i', 149 : '1-3', 150 : '1-2',
+    65 : '2-1-o', 66 : '2-1-i', 67 : '2-3', 81 : '2-2',
+    85 : '3-2', 33 : '3-1-o', 34 : '3-1-i', 35 : '3-3',
+    176 : '4-1-o', 178 : '4-1-i', 180 : '4-3', 182 : '4-2',
+    97 : '5-3', 98 : '5-1-i', 101 : '5-1-o', 118 : '5-2',
+    162 : '6-3', 163 : '6-1-i', 164 : '6-1-o', 117 : '6-2',
+    1 : '7-3', 2 : '7-1-i', 5 : '7-1-o', 86 : '7-2',
+    16 : '8-1-o', 17 : '8-1-i', 21 : '8-3', 22 : '8-2',
+    64 : '9-1-o', 68 : '9-1-i', 69 : '9-3', 70 : '9-2',
+    145 : '10-1-o', 146 : '10-3', 147 : '10-1-i', 116 : '10-2',
+    32 : '11-1-o', 36 : '11-1-i', 37 : '11-3', 38 : '11-2',
+    96 : '12-1-o', 99 : '12-1-i', 100 : '12-3', 102 : '12-2',
+    112 : '13-2', 177 : '13-3', 179 : '13-1-i', 181 : '13-1-o',
+    48 : '14-1-o', 52 : '14-1-i', 53 : '14-3', 54 : '14-2',
+    129 : '15-1-o', 130 : '15-3', 131 : '15-1-i', 113 : '15-2',
+    0 : '16-1-o', 3 : '16-1-i', 4 : '16-3', 6 : '16-2',
+    49 : '17-1-o', 50 : '17-1-i', 51 : '17-3', 84 : '17-2',
+    160 : '18-1-o', 161 : '18-1-i', 165 : '18-3', 166 : '18-2',
+    18 : '19-1-i', 19 : '19-3', 20 : '19-1-o', 80 : '19-2',
+    128 : '20-1-o', 132 : '20-1-i', 133 : '20-3', 134 : '20-2',
+    83 : 'bull-o', 115 : 'bull-i'
+  };
+
   this.focusClass = 'darts-focus';
+  this.focusedCell = null;
   this.selectedClass = 'darts-selected';
+  this.selectedCell = null;
 
   this.cells = {};
   this.draw();
 
   this.dartsAddon = new DartsAddon();
+
+  this.calibrate();
 };
 
 DartsUi.prototype.draw = function() {
@@ -52,8 +84,10 @@ DartsUi.prototype.draw = function() {
     var id = event.target.id;
     if (that.checkClass(that.cells[id].attr(), that.selectedClass)) {
       that.removeClass(that.cells[id].attr(), that.selectedClass);
+      that.selectedCell = null;
     } else {
       that.addClass(that.cells[id].attr(), that.selectedClass);
+      that.selectedCell = id;
     }
   });
 };
@@ -120,13 +154,20 @@ DartsUi.prototype.drawPoints = function(className, radius) {
 };
 
 DartsUi.prototype.focus = function(column, row) {
-  var cell = this.cells[column + '-' + row];
-  this.addClass(cell, this.focusClass);
+  var cellId = row ? column + '-' + row : column;
+  if (cellId) {
+    var cell = this.cells[cellId];
+    this.addClass(cell, this.focusClass);
+    this.focusedCell = cellId;
+  }
 };
 
 DartsUi.prototype.blur = function(column, row) {
-  var cell = this.cells[column + '-' + row];
-  this.removeClass(cell, this.focusClass);
+  var cellId = !column ? this.focusedCell : row ? column + '-' + row : column;
+  if (cellId) {
+    var cell = this.cells[cellId];
+    this.removeClass(cell, this.focusClass);
+  }
 };
 
 DartsUi.prototype.addClass = function(cell, klass) {
@@ -159,11 +200,68 @@ DartsUi.prototype.checkClass = function(cell, klass) {
   }
 };
 
+DartsUi.prototype.calibrate = function() {
+  if (!this.dartsAddon.isEnable) {
+    return;
+  }
+
+  var that = this;
+  this.dartsAddon.setListener(function (data) {
+    // console.log(data);
+
+    var cellId = that.cellsMap[data];
+    if (cellId !== undefined) {
+      that.blur();
+      that.focus(cellId);
+    } else {
+      if (that.selectedCell !== null) {
+        that.cellsMap[data] = that.selectedCell;
+        that.showCalibrationData();
+      }
+    }
+  });
+};
+
+DartsUi.prototype.showCalibrationData = function() {
+  var maps = [];
+  for (var key in this.cellsMap) {
+    maps.push(key + ' : \'' + this.cellsMap[key] + '\'');
+  }
+  console.log(maps.join(', '));
+};
+
 var DartsAddon = function () {
-  this.dartsduinoAddon = document.dartsduino;
-  if (this.dartsduinoAddon) {
+  DartsAddon.addon = document.dartsduino;
+  if (DartsAddon.addon) {
     // console.log('dartsAddon has been enabled.');
+
+    DartsAddon.addon.open('/dev/cu.usbserial-A90ZF59T');
+    DartsAddon.start();
+
+    this.isEnable = true;
   } else {
     // console.log('dartsAddon is not detected.');
+
+    this.isEnable = false;
   }
+};
+
+DartsAddon.prototype.read = function (timeout) {
+  return DartsAddon.addon.readSerial(null, timeout);
+};
+
+DartsAddon.start = function() {
+  DartsAddon.addon.readSerial(function (data) {
+    if (data !== -1) {
+      if (DartsAddon.listener) {
+        DartsAddon.listener(data);
+      }
+    }
+  }, 10);
+
+  setTimeout(DartsAddon.start, 100);
+};
+
+DartsAddon.prototype.setListener = function(listener) {
+  DartsAddon.listener = listener;
 };

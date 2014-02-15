@@ -160,10 +160,23 @@ DartsUi.prototype.checkClass = function(cell, klass) {
 };
 
 var DartsAddon = function () {
-  this.dartsduinoAddon = document.dartsduino;
-  if (this.dartsduinoAddon) {
+  DartsAddon.addon = document.dartsduino;
+  if (DartsAddon.addon) {
     // console.log('dartsAddon has been enabled.');
+
+    DartsAddon.addon.open('/dev/cu.usbserial-A90ZF59T');
+    DartsAddon.read();
   } else {
     // console.log('dartsAddon is not detected.');
   }
+};
+
+DartsAddon.read = function() {
+  DartsAddon.addon.readSerial(function (data) {
+    if (data && data.length > 0) {
+      console.log(data);
+    }
+  }, 10);
+
+  setTimeout(DartsAddon.read, 100);
 };

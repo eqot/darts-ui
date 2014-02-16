@@ -51,8 +51,6 @@ var DartsUi = function (element) {
   this.draw();
 
   this.dartsAddon = new DartsAddon();
-
-  this.calibrate();
 };
 
 DartsUi.prototype.draw = function() {

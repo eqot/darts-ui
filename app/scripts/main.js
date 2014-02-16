@@ -10,4 +10,6 @@ function main () {
   // dartsUi.focus(13, '1-i');
   // dartsUi.focus(13, '2');
   // dartsUi.focus(13, '3');
+
+  // dartsUi.calibrate();
 }

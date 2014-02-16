@@ -12,4 +12,8 @@ function main () {
   // dartsUi.focus(13, '3');
 
   // dartsUi.calibrate();
+
+  dartsUi.onHit(function (cellId, point, ratio) {
+    console.log(cellId + ' : ' + point + ' x ' + ratio + ' = ' + point * ratio);
+  });
 }

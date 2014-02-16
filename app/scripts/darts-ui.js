@@ -39,7 +39,7 @@ var DartsUi = function (element) {
     160 : '18-1-o', 161 : '18-1-i', 165 : '18-3', 166 : '18-2',
     18 : '19-1-i', 19 : '19-3', 20 : '19-1-o', 80 : '19-2',
     128 : '20-1-o', 132 : '20-1-i', 133 : '20-3', 134 : '20-2',
-    83 : 'bull-o', 115 : 'bull-i'
+    83 : '25-1', 115 : '25-2'
   };
 
   this.focusClass = 'darts-focus';
@@ -69,8 +69,8 @@ DartsUi.prototype.draw = function() {
   this.dartsUi.append(tripleRings);
   this.dartsUi.append(singleRingsI);
 
-  var OuterBull = this.drawCircle('darts-cell darts-bull darts-bull-outer', 'bull-o', this.radius * 0.1);
-  var BullsEye  = this.drawCircle('darts-cell darts-bull darts-bull-inner', 'bull-i', this.radius * 0.05);
+  var OuterBull = this.drawCircle('darts-cell darts-bull darts-bull-outer', '25-1', this.radius * 0.1);
+  var BullsEye  = this.drawCircle('darts-cell darts-bull darts-bull-inner', '25-2', this.radius * 0.05);
   this.dartsUi.append(OuterBull);
   this.dartsUi.append(BullsEye);
 
@@ -226,6 +226,21 @@ DartsUi.prototype.showCalibrationData = function() {
     maps.push(key + ' : \'' + this.cellsMap[key] + '\'');
   }
   console.log(maps.join(', '));
+};
+
+DartsUi.prototype.onHit = function(listener) {
+  if (!listener || !this.dartsAddon) {
+    return;
+  }
+
+  var that = this;
+  this.dartsAddon.setListener(function (data) {
+    var cellId = that.cellsMap[data];
+    var cellIdItems = cellId.split('-');
+    var point = Number(cellIdItems[0]);
+    var ratio = Number(cellIdItems[1]);
+    listener(cellId, point, ratio);
+  });
 };
 
 var DartsAddon = function () {

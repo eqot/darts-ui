@@ -240,6 +240,9 @@ DartsUi.prototype.onHit = function(listener) {
     var point = Number(cellIdItems[0]);
     var ratio = Number(cellIdItems[1]);
     listener(cellId, point, ratio);
+
+    that.blur();
+    that.focus(cellId);
   });
 };
 
